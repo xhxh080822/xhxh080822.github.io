@@ -1,97 +1,150 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>怒川官网</title>
-<style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:system-ui}
-body{
-    background:#121420;
-    background-image: linear-gradient(rgba(40,60,90,0.3) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(40,60,90,0.3) 1px,transparent 1px);
-    background-size:40px 40px;
-    padding:20px 16px;
-    color:#fff;
-}
-/* 缩小标题 */
-.title{
-    font-size:36px;
-    text-align:center;
-    color:#00e5ff;
-    text-shadow:0 0 8px #00e5ff,0 0 20px #00e5ff;
-    margin-bottom:24px;
-    font-weight:bold;
-}
-/* 公告卡片缩小 */
-.notice-card{
-    background:rgba(20,25,40,0.65);
-    border:1px solid #00ccff;
-    box-shadow:0 0 12px #0088ff66;
-    border-radius:14px;
-    padding:20px 18px;
-    margin-bottom:24px;
-}
-.notice-title{
-    font-size:24px;
-    color:#00e5ff;
-    margin-bottom:12px;
-    text-shadow:0 0 6px #00e5ff77;
-}
-.notice-text{
-    font-size:15px;
-    line-height:1.7;
-    color:#ffffff;
-}
-/* 通用按钮样式 */
-.btn{
-    display:block;
-    text-align:center;
-    text-decoration:none;
-    color:white;
-    font-size:20px;
-    font-weight:bold;
-    border-radius:999px;
-    padding:16px 10px;
-    margin-bottom:16px;
-}
-.btn1{
-    background:linear-gradient(90deg,#00d8ff,#9922ff);
-}
-.btn-qq{
-    background:#00cc66;
-}
-/* TG按钮样式，匹配截图蓝色 */
-.btn-tg{
-    background:linear-gradient(90deg,#0099dd,#0077bb);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    gap:12px;
-}
-/* TG小飞机图标 */
-.tg-icon{
-    width:32px;
-    height:32px;
-}
-.btn:hover{
-    opacity:0.85;
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>小禾官网</title>
+    <style>
+        /* 全局重置与背景设置 */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body, html {
+            height: 100%;
+            background-color: #070b11; /* 深色背景 */
+            background-image: 
+                linear-gradient(rgba(0, 255, 255, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 255, 255, 0.05) 1px, transparent 1px);
+            background-size: 30px 30px; /* 模拟网格背景 */
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            display: flex;
+            justify-content: center; /* 水平居中 */
+            align-items: center;     /* 垂直居中 */
+            overflow-y: auto;        /* 内容超长时允许滚动 */
+        }
+
+        /* 主容器 */
+        .wrapper {
+            width: 90%;
+            max-width: 400px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px 0;
+        }
+
+        /* 顶部标题 */
+        .title {
+            color: #00ffff;
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 25px;
+            text-shadow: 0 0 10px rgba(0, 255, 255, 0.8);
+            letter-spacing: 2px;
+        }
+
+        /* 蓝框主面板 */
+        .main-panel {
+            width: 100%;
+            border: 2px solid #00ffff;
+            border-radius: 15px;
+            padding: 20px;
+            background-color: rgba(5, 15, 25, 0.85);
+            box-shadow: 0 0 15px rgba(0, 255, 255, 0.5), inset 0 0 15px rgba(0, 255, 255, 0.2);
+            display: flex;
+            flex-direction: column;
+            gap: 15px; /* 按钮之间的间距 */
+            margin-bottom: 20px;
+        }
+
+        /* 公告标题 */
+        .notice-title {
+            color: #00ffff;
+            font-size: 18px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+        }
+
+        /* 公告文字 */
+        .notice-text {
+            color: #ffffff;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        /* 按钮通用样式 */
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            border-radius: 25px;
+            text-align: center;
+            font-size: 16px;
+            font-weight: bold;
+            color: #ffffff;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            transition: transform 0.1s;
+        }
+        .btn:active {
+            transform: scale(0.98);
+        }
+
+        /* 绿色按钮 */
+        .btn-green {
+            background-color: #00cc55;
+        }
+
+        /* 橙色按钮 */
+        .btn-orange {
+            background-color: #ff5500;
+        }
+
+        /* 底部提示 */
+        .footer-tip {
+            width: 100%;
+            border: 1px solid #00ffff;
+            border-radius: 10px;
+            padding: 12px;
+            text-align: center;
+            color: #8899aa;
+            font-size: 13px;
+            background-color: rgba(0, 0, 0, 0.5);
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
+        }
+    </style>
 </head>
 <body>
-    <h1 class="title">怒川官网</h1>
-    <div class="notice-card">
-        <h2 class="notice-title">🚀怒川官网公告</h2>
-        <div class="notice-text">
-☆怒川全项目公告声明☆<br>
-本系列作品仅供学习研究，使用者的任何行为与应用无关，请在24小时内删除本应用[下载代表同意本协议]<br>
-若有侵权违法行为，请联系我方删除内容<br>
-本卡网均为自愿捐赠<br>
-无root玩家请勿下单内核，下单默认同意<br>
-有事联系客服 恶意投诉拉黑删卡处理
+
+    <div class="wrapper">
+        <!-- 顶部标题 -->
+        <div class="title">小禾官网</div>
+
+        <!-- 发光蓝框 -->
+        <div class="main-panel">
+            <div class="notice-title">🚀 小禾官网公告</div>
+            
+            <div class="notice-text">
+                ☆小禾全项目公告声明☆<br>
+                本系列作品仅供学习研究，使用者的任何行为与应用无关，请在24小时内删除本应用[下载代表同意本协议]<br>
+                若有侵权违法行为，请联系我方删除内容<br>
+                本卡网均为自愿捐赠<br>
+                有事联系客服 恶意投诉拉黑删卡处理
+            </div>
+
+            <!-- 按钮组 -->
+<a href="https://q3g.66url.cn/d6i" class="btn btn-green">💳小禾官方卡网一</a>            <a href="https://drive.uc.cn/s/886e84f50f834?public=1" class="btn btn-orange">学生党赚米💰点我</a>
+        </div>
+
+        <!-- 底部提示 -->
+        <div class="footer-tip">
+            点击上方任意按钮即可跳转界面
         </div>
     </div>
-    <a href="https://fkli.cc/k99R"_blank" class="btn btn1">💳 免手续费卡网点我进入</a>
+
 </body>
 </html>
