@@ -3,149 +3,555 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>小禾官网</title>
+    <title>小禾工作室 - 白金最终版</title>
     <style>
-        /* 全局重置与背景设置 */
+        /* 基础重置 */
         * {
-            box-sizing: border-box;
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
+            font-family: 'PingFang SC', 'Helvetica Neue', Helvetica, Arial, sans-serif;
         }
-        body, html {
+
+        body {
+            background-color: #f5f7fa;
+            display: flex;
+            justify-content: center;
+            height: 100vh;
+            height: 100dvh;
+            overflow: hidden; 
+            color: #333;
+        }
+
+        /* 手机屏幕容器 */
+        .app-container {
+            width: 100%;
+            max-width: 480px;
             height: 100%;
-            background-color: #070b11; /* 深色背景 */
+            background-color: #fcfcfd; 
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            padding: 2vh 20px 3vh 20px; 
             background-image: 
-                linear-gradient(rgba(0, 255, 255, 0.05) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(0, 255, 255, 0.05) 1px, transparent 1px);
-            background-size: 30px 30px; /* 模拟网格背景 */
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            display: flex;
-            justify-content: center; /* 水平居中 */
-            align-items: center;     /* 垂直居中 */
-            overflow-y: auto;        /* 内容超长时允许滚动 */
+                linear-gradient(rgba(0, 0, 0, 0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 0, 0, 0.02) 1px, transparent 1px);
+            background-size: 50px 50px;
+            background-position: center top;
         }
 
-        /* 主容器 */
-        .wrapper {
-            width: 90%;
-            max-width: 400px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 20px 0;
-        }
-
-        /* 顶部标题 */
-        .title {
-            color: #00ffff;
-            font-size: 28px;
-            font-weight: bold;
-            margin-bottom: 25px;
-            text-shadow: 0 0 10px rgba(0, 255, 255, 0.8);
-            letter-spacing: 2px;
-        }
-
-        /* 蓝框主面板 */
-        .main-panel {
+        .app-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
             width: 100%;
-            border: 2px solid #00ffff;
-            border-radius: 15px;
-            padding: 20px;
-            background-color: rgba(5, 15, 25, 0.85);
-            box-shadow: 0 0 15px rgba(0, 255, 255, 0.5), inset 0 0 15px rgba(0, 255, 255, 0.2);
-            display: flex;
-            flex-direction: column;
-            gap: 15px; /* 按钮之间的间距 */
-            margin-bottom: 20px;
+            height: 60vh;
+            background: radial-gradient(circle at center top, rgba(230, 194, 106, 0.12) 0%, transparent 60%);
+            pointer-events: none;
+            z-index: 0;
         }
 
-        /* 公告标题 */
-        .notice-title {
-            color: #00ffff;
-            font-size: 18px;
-            font-weight: bold;
+        /* ❄️ 微光雪花层 ❄️ */
+        .snow-container {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; 
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .snow {
+            position: absolute;
+            top: -10px;
+            background: rgba(197, 160, 89, 0.4); 
+            border-radius: 50%;
+            filter: blur(0.5px);
+            box-shadow: 0 0 6px rgba(197, 160, 89, 0.2);
+        }
+
+        .snow.layer1 {
+            width: 5px; height: 5px;
+            box-shadow: 
+                10vw -20px 0 0 rgba(197, 160, 89, 0.3),
+                30vw -50px 0 1px rgba(0, 0, 0, 0.08),
+                50vw -10px 0 0 rgba(197, 160, 89, 0.4),
+                70vw -80px 0 1.5px rgba(0, 0, 0, 0.08),
+                90vw -30px 0 0 rgba(197, 160, 89, 0.3);
+            animation: fall1 8s linear infinite;
+        }
+
+        .snow.layer2 {
+            width: 3px; height: 3px;
+            box-shadow: 
+                20vw -100px 0 0 rgba(0, 0, 0, 0.1),
+                40vw -20px 0 1px rgba(197, 160, 89, 0.5),
+                60vw -150px 0 0 rgba(0, 0, 0, 0.1),
+                80vw -40px 0 1px rgba(197, 160, 89, 0.4);
+            animation: fall2 12s linear infinite;
+        }
+
+        .snow.layer3 {
+            width: 7px; height: 7px;
+            box-shadow: 
+                15vw -50px 0 0 rgba(197, 160, 89, 0.2),
+                45vw -120px 0 1px rgba(0, 0, 0, 0.08),
+                75vw -30px 0 0 rgba(197, 160, 89, 0.2),
+                95vw -90px 0 1px rgba(0, 0, 0, 0.08);
+            animation: fall3 15s linear infinite;
+        }
+
+        @keyframes fall1 {
+            0% { transform: translateY(-10vh) translateX(0); }
+            50% { transform: translateY(50vh) translateX(20px); }
+            100% { transform: translateY(110vh) translateX(-20px); }
+        }
+
+        @keyframes fall2 {
+            0% { transform: translateY(-10vh) translateX(0); }
+            50% { transform: translateY(50vh) translateX(-30px); }
+            100% { transform: translateY(110vh) translateX(30px); }
+        }
+
+        @keyframes fall3 {
+            0% { transform: translateY(-10vh) translateX(0); }
+            50% { transform: translateY(50vh) translateX(15px); }
+            100% { transform: translateY(110vh) translateX(-15px); }
+        }
+
+        /* 🌟 顶部栏区域（包含左右两部分） */
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 10;
+            margin-bottom: 1vh;
+            position: relative;
+        }
+
+        /* 1. 左上角 Logo */
+        .top-left-logo {
             display: flex;
             align-items: center;
         }
 
-        /* 公告文字 */
-        .notice-text {
-            color: #ffffff;
-            font-size: 13px;
-            line-height: 1.6;
+        .logo-icon-wrapper {
+            width: 30px; 
+            height: 30px;
+            border-radius: 50%;
+            border: 1px solid rgba(197, 160, 89, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 10px;
+            position: relative;
+            background: #fff;
+            box-shadow: 0 2px 10px rgba(197, 160, 89, 0.1);
+        }
+        
+        .logo-icon-wrapper::after {
+            content: '';
+            position: absolute;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            border: 1px dashed rgba(197, 160, 89, 0.3);
         }
 
-        /* 按钮通用样式 */
-        .btn {
-            display: block;
-            width: 100%;
-            padding: 15px;
-            border-radius: 25px;
-            text-align: center;
+        .logo-text-box h1 {
             font-size: 16px;
-            font-weight: bold;
-            color: #ffffff;
+            font-weight: 900;
+            color: #222;
+            letter-spacing: 1px;
+        }
+
+        /* 2. 右上角 快捷下载按钮 */
+        .top-right-btn {
             text-decoration: none;
+            font-size: 12px;
+            font-weight: bold;
+            color: #c5a059; /* 金色文字 */
+            border: 1px solid rgba(197, 160, 89, 0.5);
+            padding: 6px 12px;
+            border-radius: 20px;
+            background-color: #fff;
+            box-shadow: 0 2px 8px rgba(197, 160, 89, 0.1);
+            transition: all 0.2s;
+        }
+
+        .top-right-btn:active {
+            transform: scale(0.95);
+            background-color: #fcf9f2;
+        }
+
+        /* 中间主要区域 */
+        .main-content {
+            flex: 1; 
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-evenly; 
+            z-index: 2;
+            position: relative;
+            padding: 1vh 0;
+        }
+
+        /* 3. 中间大 Logo 及 六芒星法阵 */
+        .center-emblem {
+            position: relative;
+            width: 130px; 
+            height: 130px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .emblem-ring-outer {
+            position: absolute;
+            width: 100%; height: 100%; 
+            border-radius: 50%; 
+            border: 1px solid rgba(197, 160, 89, 0.15);
+        }
+
+        .emblem-ring-inner {
+            position: absolute;
+            width: 85%; height: 85%; 
+            border-radius: 50%; 
+            border: 1px dashed rgba(197, 160, 89, 0.3);
+        }
+
+        .star-of-david {
+            position: absolute;
+            width: 95px;
+            height: 110px; 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .triangle-up {
+            position: absolute;
+            width: 100%; height: 100%;
+            border-bottom: 1px solid rgba(197, 160, 89, 0.6);
+            clip-path: polygon(50% 0%, 0% 100%, 100% 100%, 50% 0%);
+            border: none;
+        }
+        
+        .triangle-up::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            border: 1px solid rgba(197, 160, 89, 0.6);
+            clip-path: polygon(50% 0%, 0% 100%, 100% 100%, 50% 0%);
+            box-shadow: 0 0 8px rgba(197, 160, 89, 0.1);
+        }
+
+        .triangle-down {
+            position: absolute;
+            width: 100%; height: 100%;
+            transform: rotate(180deg);
+        }
+
+        .triangle-down::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            border: 1px solid rgba(197, 160, 89, 0.6);
+            clip-path: polygon(50% 0%, 0% 100%, 100% 100%, 50% 0%);
+            box-shadow: 0 0 8px rgba(197, 160, 89, 0.1);
+        }
+
+        .dots-container {
+            position: absolute;
+            width: 100%; height: 100%;
+            animation: rotate 30s linear infinite; 
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .dot {
+            position: absolute;
+            width: 4px; height: 4px;
+            background-color: #c5a059;
+            border-radius: 50%;
+            box-shadow: 0 0 6px rgba(197, 160, 89, 0.5);
+            left: 50%;
+            top: 50%;
+            margin-left: -2px;
+            margin-top: -2px;
+        }
+
+        .dot:nth-child(1) { transform: rotate(0deg) translateY(-65px); }
+        .dot:nth-child(2) { transform: rotate(60deg) translateY(-65px); }
+        .dot:nth-child(3) { transform: rotate(120deg) translateY(-65px); }
+        .dot:nth-child(4) { transform: rotate(180deg) translateY(-65px); }
+        .dot:nth-child(5) { transform: rotate(240deg) translateY(-65px); }
+        .dot:nth-child(6) { transform: rotate(300deg) translateY(-65px); }
+
+        .center-text-logo {
+            position: relative;
+            z-index: 2;
+            width: 75px; 
+            height: 75px;
+            background: #ffffff;
+            border-radius: 50%; 
+            border: 1.5px solid rgba(197, 160, 89, 0.8);
+            box-shadow: inset 0 0 15px rgba(197, 160, 89, 0.05), 0 4px 15px rgba(197, 160, 89, 0.15);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 22px;
+            font-weight: 900;
+            background: linear-gradient(135deg, #111 0%, #c5a059 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 1px;
+        }
+
+        .main-title-box {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .bg-word {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 28px;
+            font-weight: 900;
+            color: rgba(0, 0, 0, 0.03);
+            letter-spacing: 6px;
+            white-space: nowrap;
+            z-index: 1;
+        }
+
+        .main-title {
+            position: relative;
+            font-size: 34px;
+            font-weight: 900;
+            letter-spacing: 4px;
+            z-index: 2;
+            background: linear-gradient(90deg, #222222 0%, #c5a059 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 2px 2px rgba(0,0,0,0.05));
+        }
+
+        .stats-container {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            gap: 8px;
+        }
+
+        .stat-card {
+            flex: 1;
+            background: #ffffff;
+            border: 1px solid rgba(197, 160, 89, 0.15);
+            border-radius: 10px;
+            padding: 12px 2px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 20px -6px rgba(197, 160, 89, 0.15), 0 2px 6px rgba(0, 0, 0, 0.02);
+        }
+
+        .stat-value {
+            font-size: 18px;
+            font-weight: 900;
+            margin-bottom: 2px;
+            font-family: 'Arial Black', sans-serif;
+        }
+
+        .stat-value.gold {
+            background: linear-gradient(to bottom, #c5a059 20%, #8c6d2f 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .stat-value.gold.glow {
+            background: linear-gradient(to bottom, #3b82f6 20%, #1e40af 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 0 5px rgba(59, 130, 246, 0.2));
+        }
+
+        .stat-label {
+            font-size: 10px;
+            color: #777;
+            letter-spacing: 0;
+        }
+
+        .description {
+            font-size: 11px;
+            color: #888;
+            text-align: center;
+            line-height: 1.5;
+            padding: 0 10px;
+        }
+
+        /* 🌟 4. 底部四排大按钮 🌟 */
+        .button-group {
+            width: 100%;
+            display: flex;
+            flex-direction: column; 
+            gap: 10px; 
+            z-index: 2;
+            position: relative;
+            margin-bottom: 1vh;
+        }
+
+        .btn {
+            text-decoration: none; 
+            width: 100%; 
+            font-size: 14px; 
+            font-weight: bold;
+            padding: 14px 5px; 
             border: none;
             cursor: pointer;
-            transition: transform 0.1s;
-        }
-        .btn:active {
-            transform: scale(0.98);
-        }
-
-        /* 绿色按钮 */
-        .btn-green {
-            background-color: #00cc55;
-        }
-
-        /* 橙色按钮 */
-        .btn-orange {
-            background-color: #ff5500;
-        }
-
-        /* 底部提示 */
-        .footer-tip {
-            width: 100%;
-            border: 1px solid #00ffff;
-            border-radius: 10px;
-            padding: 12px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 6px;
+            border-radius: 50px; 
+            transition: transform 0.1s, box-shadow 0.1s;
             text-align: center;
-            color: #8899aa;
-            font-size: 13px;
-            background-color: rgba(0, 0, 0, 0.5);
-            box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
         }
+
+        .btn:active {
+            transform: scale(0.97);
+        }
+
+        .btn-safe {
+            background: linear-gradient(90deg, #86efac 0%, #22c55e 100%);
+            color: #064e3b; 
+            box-shadow: 0 6px 16px rgba(34, 197, 94, 0.25);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+        }
+
+        .btn-secondary {
+            background-color: #ffffff;
+            color: #555;
+            border: 1.5px solid #eee;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+        }
+
+        .btn-purple {
+            background: linear-gradient(90deg, #f3e8ff 0%, #d8b4fe 100%);
+            color: #6b21a8;
+            box-shadow: 0 6px 16px rgba(216, 180, 254, 0.25);
+        }
+
     </style>
 </head>
 <body>
 
-    <div class="wrapper">
-        <!-- 顶部标题 -->
-        <div class="title">小禾官网</div>
+<div class="app-container">
+    
+    <!-- ❄️ 微光雪花层 ❄️ -->
+    <div class="snow-container">
+        <div class="snow layer1"></div>
+        <div class="snow layer2"></div>
+        <div class="snow layer3"></div>
+    </div>
 
-        <!-- 发光蓝框 -->
-        <div class="main-panel">
-            <div class="notice-title">🚀 小禾官网公告</div>
+    <!-- 🌟 顶部栏（左侧Logo，右侧快捷下载按钮） -->
+    <div class="top-bar">
+        
+        <!-- 左侧 Logo -->
+        <div class="top-left-logo">
+            <div class="logo-icon-wrapper">
+                <span style="color:#c5a059; font-size: 8px; font-weight:bold;">小禾</span>
+            </div>
+            <div class="logo-text-box">
+                <h1>小禾工作室</h1>
+            </div>
+        </div>
+
+        <!-- 右侧下载按钮 -->
+        
+        </a>
+        
+    </div>
+
+    <!-- 核心内容区 -->
+    <div class="main-content">
+        
+        <!-- 中间大 Logo 及 六芒星法阵 -->
+        <div class="center-emblem">
+            <div class="emblem-ring-outer"></div>
+            <div class="emblem-ring-inner"></div>
             
-            <div class="notice-text">
-                ☆小禾全项目公告声明☆<br>
-                本系列作品仅供学习研究，使用者的任何行为与应用无关，请在24小时内删除本应用[下载代表同意本协议]<br>
-                若有侵权违法行为，请联系我方删除内容<br>
-                本卡网均为自愿捐赠<br>
-                有事联系客服 恶意投诉拉黑删卡处理
+            <div class="star-of-david">
+                <div class="triangle-up"></div>
+                <div class="triangle-down"></div>
             </div>
 
-            <!-- 按钮组 -->
-            <a href="https://k.08ka.top/Lbj" class="btn btn-green">💳 官方卡网一（不能付款换另一个）</a>
-            <a href="https://ys.melognb.cn/shop/9FAT477C" class="btn btn-green">💳 官方卡网二（不能付款用另一个）</a>
+            <div class="dots-container">
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+            </div>
+
+            <div class="center-text-logo">小禾</div>
         </div>
 
-        <!-- 底部提示 -->
-        <div class="footer-tip">
-            点击上方任意按钮即可跳转界面
+        <!-- 大标题 -->
+        <div class="main-title-box">
+            <div class="bg-word">XIAO HE</div>
+            <div class="main-title">小禾</div>
         </div>
+
+        <!-- 🌟 数据卡片组 🌟 -->
+        <div class="stats-container">
+            <div class="stat-card">
+                <div class="stat-value gold">1w+</div>
+                <div class="stat-label">服务客户</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value gold glow">99%</div>
+                <div class="stat-label">好评率</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value gold">0封号</div>
+                <div class="stat-label">安全记录</div>
+            </div>
+        </div>
+
+        <p class="description">
+            小禾工作室专注和平精英游戏服务，专业、高效、安全，为每一位精英玩家提供全方位支持。
+        </p>
+
     </div>
+
+    <!-- 🌟 底部四排大按钮（括号内容已删除） 🌟 -->
+    <div class="button-group">
+        
+        <a href="https://kj.lqfaka.com/shop/K3Q9Y51W" target="_blank" class="btn btn-safe">
+            <span style="font-size: 16px;">🛡️</span> 官方店铺一
+        </a>
+        
+        <a href="https://ys.melognb.cn/shop/9FAT477C" target="_blank" class="btn btn-safe">
+            <span style="font-size: 16px;">🛡️</span> 官方店铺二
+        </a>
+        
+        <a href="https://llua.cn/?mod=cardcheck&id=86093" target="_blank" class="btn btn-secondary">
+            <span style="font-size: 16px;">🔑</span> 解绑卡密点我
+        </a>
+        </a>
+    </div>
+
+</div>
 
 </body>
 </html>
